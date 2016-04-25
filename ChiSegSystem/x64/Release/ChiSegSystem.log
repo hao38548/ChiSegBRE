@@ -1,5 +1,19 @@
-﻿生成启动时间为 2015/8/2 16:38:15。
+﻿生成启动时间为 2016/4/24 21:05:55。
+     1>项目“E:\coding\ChineseSegment\备份（基于左右分支熵）\分词程序（基于左右分支熵）\ChiSegSystem\ChiSegSystem.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         F:\software\VisualStudio2013\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oi /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt ChiSeg.cpp
+         ChiSeg.cpp
+       Link:
+         F:\software\VisualStudio2013\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"E:\coding\ChineseSegment\备份（基于左右分支熵）\分词程序（基于左右分支熵）\x64\Release\ChiSegSystem.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\coding\ChineseSegment\备份（基于左右分支熵）\分词程序（基于左右分支熵）\x64\Release\ChiSegSystem.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\coding\ChineseSegment\备份（基于左右分支熵）\分词程序（基于左右分支熵）\x64\Release\ChiSegSystem.lib" /MACHINE:X64 x64\Release\ChiSeg.obj
+         x64\Release\ChiSegSystem.obj
+         x64\Release\stdafx.obj
+         正在生成代码
+     1>e:\coding\chinesesegment\备份（基于左右分支熵）\分词程序（基于左右分支熵）\chisegsystem\chisegsystem.cpp(380): warning C4715: “ChiSeg::GetBEValues”: 不是所有的控件路径都返回值
+     1>e:\coding\chinesesegment\备份（基于左右分支熵）\分词程序（基于左右分支熵）\chisegsystem\chisegsystem.cpp(518): warning C4715: “ChiSeg::MainProcess”: 不是所有的控件路径都返回值
+         已完成代码的生成
+         ChiSegSystem.vcxproj -> E:\coding\ChineseSegment\备份（基于左右分支熵）\分词程序（基于左右分支熵）\x64\Release\ChiSegSystem.exe
+     1>已完成生成项目“E:\coding\ChineseSegment\备份（基于左右分支熵）\分词程序（基于左右分支熵）\ChiSegSystem\ChiSegSystem.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:00.01
+已用时间 00:00:03.15

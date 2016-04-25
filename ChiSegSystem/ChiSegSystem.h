@@ -14,12 +14,18 @@ using namespace std;
 typedef struct  
 {
 	int hidden_states_cnt;//隐含状态的数目，在本中文分词中为2，但是语音识别中，该数目每个层次均不一样
-	int observestates_cnt;//观察到的序列长度，即观察状态数目
+	int observestates_cnt;//观察到的序列长度，即观察状态数目，在分词中并不存在观察序列，或者说发射概率为1，不需考虑了
 	double* strat_vector;//初始概率向量
 	double** transfer_matrix;//转移概率矩阵
 	//理应还有一个混淆矩阵，但本系统中均为一，所以不予考虑
 }HMM;
+//定义HMM单个节点结构
+typedef struct 
+{
+	string path;
+	float currentMaxValue;
 
+}hmmNode;
 //定义分支熵结构
 typedef struct{
 	float lbe;
@@ -47,7 +53,7 @@ typedef set<Node> SingleHierachy;
 
 typedef vector<string> Sentence;
 typedef vector<Sentence> Doc;
-typedef map<string,BE> Dictionary;
+typedef map<string,float> Dictionary;
 
 class ChiSeg{
 private:
@@ -66,7 +72,8 @@ public:
 	string ViterbiStyleAlgorithm(Sentence sentence);
 	//生成分词词图
 	void GenerateGraph(Sentence sentence);
-
+	//生成HMM转移矩阵
+	void GenHMMTransMat(Sentence sentence, float* transferMar);
 	//主算法流程
 
 	bool MainProcess(const char* pun_file_path,const char* one_gram_filepath,string dictionary_filepaths[3],string source_file,string result_file);
@@ -87,7 +94,7 @@ public:
 	//初始化，传入标点文件和一元词表文件
 	bool InitPrePro(const char*  pun_file_path,const char* one_gram_filepath);
 	//解析一行
-	void ParseLine( const string& str, Doc& doc);
+	void ParseLine(string& str, Doc& doc);
 	//保存一个词汇进入文章结构中
 	void SaveWord(const string& word, Doc& doc);
 

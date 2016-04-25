@@ -55,8 +55,9 @@ bool PreProcessing::InitPrePro(const char*  pun_file_path,const char* one_gram_f
 }
 
 //解析一行
-void PreProcessing::ParseLine(const string& str, Doc& doc)
+void PreProcessing::ParseLine(string& str, Doc& doc)
 {
+	str = U2G(str.c_str());
 	//清除前一行保存的标点
 	pun_list.clear();
 	doc.clear();
@@ -156,7 +157,7 @@ char* PreProcessing::U2G(const char* utf8)
 bool ChiSeg::GenerateDictionarys(string filepaths[3])
 {
 	string word,temp_word;
-	BE be;
+	float be=0.0f;
 	unsigned long long word_cnt=0;//计算读取了多少词汇的计数器
 	cout<<"Generating Dictionaries";
 	//循环读取三个文件并加载入词典中
@@ -180,9 +181,9 @@ bool ChiSeg::GenerateDictionarys(string filepaths[3])
 				in>>temp_word;
 				word+=temp_word;
 			}
-			in  >> be.lbe >> be.rbe;
+			in  >> be;
 			//将数加载进入相应的字典中
-			dictionary[i].insert(map<string ,BE>::value_type(word,be));
+			dictionary[i].insert(map<string ,float>::value_type(word,be*(i+1)));
 			//显示处理进度的标示
 			if (word_cnt++%20000 == 0)
 			{
@@ -192,6 +193,21 @@ bool ChiSeg::GenerateDictionarys(string filepaths[3])
 		in.close();
 	}
 	return true;
+}
+
+
+/**
+*函数名:GenHMMTransMat
+*功能:输入的句子，根据词典生成转移概率矩阵
+*参数说明:  Sentence sentence
+*参数说明:  float * transferMar
+*返回值:void
+*说明:
+*日期:2016-4-24-15:38
+*作者:MR.SUN
+*/void ChiSeg::GenHMMTransMat(Sentence sentence, float* transferMar)
+{
+
 }
 
 
@@ -212,6 +228,8 @@ void ChiSeg::GenerateHMM(Sentence sentence)
 	//隐含序列每列两个
 	hmm.hidden_states_cnt=hmm.observestates_cnt*2;
 	//对转移矩阵进行赋值
+
+	//
 
 
 }
@@ -343,20 +361,20 @@ float ChiSeg::GetBEValues(string word,int n)
 	//若是分支熵中有一个值为0，则返回0
 	if (n == 1)
 	{
-		float value=dictionary[0][word].lbe*dictionary[0][word].rbe;
+		float value=dictionary[0][word];
 		//防止log出现一个过大的负数
-		return value > 1?(log(value)/log((double)2)):value;
+		return value;
 	}
 	if (n == 2)
 	{
-		float value=dictionary[1][word].lbe*dictionary[1][word].rbe;
-		return value*0.819;
+		float value=dictionary[1][word];
+		return value;
 /*		return dictionary[1][word].lbe*dictionary[1][word].rbe*log(3.0)/log((double)2);*/
 	}
 	if (n == 3)
 	{
-		float value=dictionary[2][word].lbe*dictionary[2][word].rbe;
-		return value*log(3.0)/log((double)2);
+		float value = dictionary[2][word];
+		return value;
 /*		return dictionary[2][word].lbe*dictionary[2][word].rbe* log(3.90)/log((double)2);*/
 	}
 }
@@ -480,15 +498,15 @@ bool ChiSeg::MainProcess(const char* pun_file_path,const char* one_gram_filepath
 				GenerateGraph(doc[i]);
 				//维特比算法寻找最优路径
 				final_result=ViterbiStyleAlgorithm(doc[i]);
-				do 
+				/*do 
 				{
 					final_result+=pre->pun_list[pun_cnt];
 					pun_cnt++;
-				} while (pre->pun_list[pun_cnt]=="|||");
+				} while (pre->pun_list[pun_cnt]=="|||");*/
 				out<<final_result;
 			}						
 	    }
-		out<<endl<<buff;
+		//out<<endl<<buff;
 		out<<"\n";
 		if ((doc_cnt++)%1000==0)
 		{
